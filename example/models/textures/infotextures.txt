@@ -1,2 +1,0 @@
-Textures da porsi non in repo ma nella corrispondente cartella textures di funzionamento i.e. workshops
-Solo posso inserire in repo i thumbnails ed i file js, sempre a patto di richiamarli nella funzionalita vera i.e. workshops 
