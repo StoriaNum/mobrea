@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<head>
+
+<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+
+
+    
+
+   
+    <link rel="shortcut icon" type="image/x-icon" href="https://storianum.github.io/workshops/example/favicon.ico">
+
+    <link href="https://storianum.github.io/workshops/example/css/bootstrap.css" rel="stylesheet">
+    <link href="https://storianum.github.io/workshops/example/css/example.css" rel="stylesheet">
+   
+
+    <script src="https://storianum.github.io/workshops/example/js/blueprint3d.js"></script>
+
+    <script src="https://storianum.github.io/workshops/example/js/jquery.js"></script>
+    <script src="https://storianum.github.io/workshops/example/js/bootstrap.js"></script>
+
+    <script src="https://storianum.github.io/workshops/example/js/items.js"></script>
+    
+    <script src="https://storianum.github.io/workshops/example/js/items_0.js"></script>  
+    <script src="https://storianum.github.io/workshops/example/js/items_1.js"></script>
+    <script src="https://storianum.github.io/workshops/example/js/items_2.js"></script>
+    <script src="https://storianum.github.io/workshops/example/js/items_3.js"></script>
+    <script src="https://storianum.github.io/workshops/example/js/items_4.js"></script>
+    <script src="https://storianum.github.io/workshops/example/js/items_5.js"></script>
+    
+    <script src="https://storianum.github.io/workshops/example/js/example.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://storianum.github.io/workshops/example/js/html2canvas.js"></script>
+
+
+
+
+
+<!-- three.js library -->
+<script src='../../vendor/three.js/build/three.js'></script>
+<script src='../../vendor/three.js/examples/js/libs/stats.min.js'></script>
+<!-- jsartookit -->
+<script src='../../../vendor/jsartoolkit5/build/artoolkit.min.js'></script>
+<script src='../../../vendor/jsartoolkit5/js/artoolkit.api.js'></script>
+<!-- aruco -->
+<script src='../../../vendor/js-aruco/src/svd.js'></script> 
+<script src='../../../vendor/js-aruco/src/posit1.js'></script> 
+<script src='../../../vendor/js-aruco/src/cv.js'></script> 
+<script src='../../../vendor/js-aruco/src/aruco.js'></script> 
+<script src='../../../src/threex/threex-aruco/threex-arucocontext.js'></script> 
+<script src='../../../src/threex/threex-aruco/threex-arucodebug.js'></script>
+<!-- include threex.artoolkit -->
+<script src='../../../src/threex/threex-artoolkitsource.js'></script>
+<script src='../../../src/threex/threex-artoolkitcontext.js'></script>
+<script src='../../../src/threex/threex-artoolkitprofile.js'></script>
+<script src='../../../src/threex/threex-arbasecontrols.js'></script>
+<script src='../../../src/threex/threex-armarkercontrols.js'></script>
+<script src='../../../src/threex/threex-armarkerhelper.js'></script>
+<script src='../../../src/threex/threex-arsmoothedcontrols.js'></script>
+<script>THREEx.ArToolkitContext.baseURL = '../../../'</script>
+
+<script src='../threex-armultimarkerutils.js'></script>
+<script src='../threex-armultimarkercontrols.js'></script>
+<script src='../threex-armultimarkerlearning.js'></script>
+
+
+</head>
+
+
+
+ <body>
+
+    <div class="container-fluid">
+      <div class="row main-row">
+        <!-- Left Column -->
+        <div class="col-xs-3 sidebar">
+          <!-- Main Navigation -->
+          <ul class="nav nav-sidebar">
+            <li id="floorplan_tab"><a href="#">
+              Edita Pianta
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+            <li id="design_tab"><a href="#">
+              Progetto in Corso
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+	    <li id="items_tab_0"><a href="#">
+              Complementi di Progetto
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+            <li id="items_tab"><a href="#">
+              Aggiungi Sedute
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+            <li id="items_tab_1"><a href="#">
+              Aggiungi Tavoli/Scrivanie
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+            <li id="items_tab_2"><a href="#">
+              Aggiungi Armadi/Cassettiere
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+           <li id="items_tab_3"><a href="#">
+              Aggiungi Carrelli
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>	
+	   <li id="items_tab_4"><a href="#">
+              Aggiungi Racks
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+	   <li id="items_tab_5"><a href="#">
+              Aggiungi Scaffalature
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+          </ul>
+          <hr />
+
+         <!-- Context Menu -->
+          <div id="context-menu">
+            <div style="margin: 0 20px">
+              <span id="context-menu-name" class="lead"></span>
+              <br /> 
+              <button class="btn btn-block btn-danger" id="context-menu-delete">
+                <span class="glyphicon glyphicon-trash"></span> 
+                Cancella Arredo
+              </button>
+            <br />
+		       
+
+             <a class="btn btn-block btn-info" href="" id="modelGallerylink" target="_blank">
+                <span class="glyphicon glyphicon-align-center"></span> 
+                Zoom arredo
+	      </a>
+		    <br />
+		
+              
+              
+            <div class="panel panel-default" id="panelcustomitem">
+              <div class="panel-heading" id="contentdimens">Varia Dimensione</div>
+              <div class="panel-body" style="color: #333333">
+
+                <div class="form form-horizontal" class="lead">
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label">
+                       L
+                    </label>
+                    <div class="col-sm-6">
+                   <!--   <input type="number" class="form-control" id="item-width"> se voglio campo L modificabile -->
+                    <input type="number" class="form-control" id="item-width" readonly> 
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label">
+                      P 
+                    </label>
+                    <div class="col-sm-6">
+                    <!--  <input type="number" class="form-control" id="item-depth"> se voglio campo P modificabile -->
+                      <input type="number" class="form-control" id="item-depth" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label">
+                      H
+                    </label>
+                    <div class="col-sm-6">
+                    <!--   <input type="number" class="form-control" id="item-height"> se voglio campo H modificabile -->
+                      <input type="number" class="form-control" id="item-height" readonly>
+                    </div>
+                  </div>
+                </div>
+                <small><span class="text-muted">Misure in centimetri [cm]</span></small>
+              </div>
+            </div>
+
+            <label><input type="checkbox" id="fixed" /> Blocca posizione</label>
+ <!--  -->           <br />
+            <label><span class="text-muted" style="color:green" id="prez">Prezzo: </span><i><span id="modelPricetot"></span></i>
+	    <span class="text-muted" style="color:green" id="infoiva"> IVA inclusa</span>
+	    </label>  
+            <br /><br />
+              
+            <a class="btn btn-block btn-success" href="" id="modelBuybasketlink" target="_blank">
+                <span class="glyphicon glyphicon-align-center" id="basketorcustom"></span> 
+                Altri Dettagli o Compra
+              </a>
+	    <a class="btn btn-block btn-success" href="" id="modelBuybasketlink2" target="_blank">
+            <span class="glyphicon glyphicon-send" id="basketorcustom2"></span>
+                Richiedi Info e Costi
+              </a>
+            <a class="btn btn-block btn-success" href="" id="namecodeitem" target="_blank">
+		link
+	      </a> 
+   
+   
+<script>
+  $( function() {
+    var spinnerW = $( "#item-width" ).spinner();
+    var spinnerH = $( "#item-height" ).spinner();
+    var spinnerP = $( "#item-depth" ).spinner();
+ 
+    $( "#modelBuybasketlink2" ).on( "click", function() {    
+      var primapartediurl = document.getElementById("namecodeitem").href;
+      var secondapartediurl = "&L="+spinnerW.spinner( "value" )+"&H="+spinnerH.spinner( "value" )+"&P="+spinnerP.spinner( "value" )+"";
+      document.getElementById("modelBuybasketlink2").href = ""+primapartediurl+""+secondapartediurl+""; 
+    });
+  } );
+  </script> 
+              
+              
+             
+             
+             
+             
+              
+	     <br /><br />                                                   
+              
+            </div>
+          </div>
+		
+		
+
+<div class="col-xs-9 main">
+
+<a href="#" class="btn btn-default btn-sm" id="save_image_locally">
+<span class="glyphicon glyphicon-screenshot" title="Salva immagine del progetto"></span>                  <!--  ImgJpg -->
+</a>  
+<script>
+  $('#save_image_locally').click(function(){
+    html2canvas($('#imagesave'), 
+    {
+      onrendered: function (canvas) {  
+       var a = document.createElement('a');
+        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+        a.download = 'myfilename.jpg';
+        a.click();  
+   
+      }
+    });
+  });
+</script>
+              
+<!-- insert label storiablue with its own link                  
+<a href="storiablueblue" style="font-size: 20px; font-style: italic; color: red;">storiablue</a>
+--> 
+              
+&nbsp;<span class="mcright"><a href="storiablueblue" class="fontkaushan">storiabluee12345</a>
+</span>
+                    
+
+              
+<!-- end inserting label storiablue with its own link  -->
+               
+            </div>
+		
+		
+
+
+
+
+
+
+
+
+	
+	
+			
+	      
+	       <!-- Add Items_0 commento-->
+          <div id="add-items_0">   
+            <div class="row" id="items-wrapper_0">  
+
+              <!-- Items added here by items_0.js commento -->
+            </div> <br><br>   
+          </div>
+		
+
+          <!-- Add Items -->
+          <div id="add-items">
+            <div class="row" id="items-wrapper">
+
+              <!-- Items added here by items.js -->
+            </div> <br><br>
+          </div>
+          
+         <!-- Add Items_1 commento-->
+          <div id="add-items_1">   
+            <div class="row" id="items-wrapper_1">  
+
+              <!-- Items added here by items_1.js commento -->
+            </div>  <br><br> 
+          </div>     
+      
+          <!-- Add Items_2 commento-->
+          <div id="add-items_2">   
+            <div class="row" id="items-wrapper_2">  
+ 
+              <!-- Items added here by items_2.js commento -->
+            </div>   <br><br>
+          </div>
+		
+	 <!-- Add Items_3 commento-->
+          <div id="add-items_3">   
+            <div class="row" id="items-wrapper_3">  
+
+              <!-- Items added here by items_3.js commento -->
+            </div>  <br><br>   
+          </div>
+		
+	 <!-- Add Items_4 commento-->
+          <div id="add-items_4">   
+            <div class="row" id="items-wrapper_4">  
+
+              <!-- Items added here by items_4.js commento -->
+            </div>   <br><br>
+          </div>
+          
+         
+	 <!-- Add Items_5 commento-->
+          <div id="add-items_5">   
+            <div class="row" id="items-wrapper_5">  
+
+              <!-- Items added here by items_5.js commento -->
+            </div>   <br><br>
+          </div>
+		
+		
+        </div> 
+        <!-- End Right Column -->
+	
+</div>	
+	</body>
