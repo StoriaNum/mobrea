@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+<head>
+
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 
 
@@ -63,35 +66,202 @@
 <script src='../threex-armultimarkercontrols.js'></script>
 <script src='../threex-armultimarkerlearning.js'></script>
 
+
+</head>
+
 <style>
 	#recordButton:hover, #recordStopButton:hover  {
 		cursor: pointer;
 	}
 </style>
 
-<body style='margin : 0px; overflow: hidden; font-family: Monospace;'><div style='position: absolute; top: 10px; width:100%; text-align: center;z-index:1';>
-	<a href='https://github.com/jeromeetienne/AR.js/' target='_blank'>AR.js</a> - Multi marker
-	by <a href='https://twitter.com/jerome_etienne' target='_blank'>@jerome_etienne</a>
-	<br/>
-	Status:
-	<span id='appStatus' style='font-weight: bolder;'>stopped</span>
-	- 
-	File:
-	<span id='dataStatus' style='font-weight: bolder;'>none</span>
-	<br/>
-	<a href='javascript:void(0)' onclick='onRecordClear()'>Clear File</a>
-</div>
-<div style='position: fixed; bottom: 16px; right: 16px; z-index:2';>
-	<img id='recordStartButton' src="images/record-start.png" width='64px'  height='64px' onclick='onRecordStart()'>
-	<img id='recordStopButton' src="images/record-stop.png" width='64px'  height='64px' onclick='onRecordStop()' style='display: none;'>
-</div>
-<div style='position: fixed; bottom: 16px; left: 16px; z-index:2' id='markersStatus';>
-	<div>
-		Tracking <span class='labelTrackingBackend'>Unknown</span> - 
-		Learning <span class='globalStatus'>Stopped</span>
-	</div>
-	<ul></ul>
-</div>
+ <body>
+
+    <div class="container-fluid">
+      <div class="row main-row">
+        <!-- Left Column -->
+        <div class="col-xs-3 sidebar">
+          <!-- Main Navigation -->
+          <ul class="nav nav-sidebar">
+            <li id="floorplan_tab"><a href="#">
+              Edita Pianta
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+            <li id="design_tab"><a href="#">
+              Progetto in Corso
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+            </a></li>
+	    <li id="items_tab_0"><a href="#">
+              Complementi di Progetto
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+            <li id="items_tab"><a href="#">
+              Aggiungi Sedute
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+            <li id="items_tab_1"><a href="#">
+              Aggiungi Tavoli/Scrivanie
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+            <li id="items_tab_2"><a href="#">
+              Aggiungi Armadi/Cassettiere
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+           <li id="items_tab_3"><a href="#">
+              Aggiungi Carrelli
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>	
+	   <li id="items_tab_4"><a href="#">
+              Aggiungi Racks
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+	   <li id="items_tab_5"><a href="#">
+              Aggiungi Scaffalature
+              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+              </a></li>
+          </ul>
+          <hr />
+
+         <!-- Context Menu -->
+          <div id="context-menu">
+            <div style="margin: 0 20px">
+              <span id="context-menu-name" class="lead"></span>
+              <br /> 
+              <button class="btn btn-block btn-danger" id="context-menu-delete">
+                <span class="glyphicon glyphicon-trash"></span> 
+                Cancella Arredo
+              </button>
+            <br />
+		       
+
+             <a class="btn btn-block btn-info" href="" id="modelGallerylink" target="_blank">
+                <span class="glyphicon glyphicon-align-center"></span> 
+                Zoom arredo
+	      </a>
+		    <br />
+		
+              
+              
+            <div class="panel panel-default" id="panelcustomitem">
+              <div class="panel-heading" id="contentdimens">Varia Dimensione</div>
+              <div class="panel-body" style="color: #333333">
+
+                <div class="form form-horizontal" class="lead">
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label">
+                       L
+                    </label>
+                    <div class="col-sm-6">
+                   <!--   <input type="number" class="form-control" id="item-width"> se voglio campo L modificabile -->
+                    <input type="number" class="form-control" id="item-width" readonly> 
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label">
+                      P 
+                    </label>
+                    <div class="col-sm-6">
+                    <!--  <input type="number" class="form-control" id="item-depth"> se voglio campo P modificabile -->
+                      <input type="number" class="form-control" id="item-depth" readonly>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label">
+                      H
+                    </label>
+                    <div class="col-sm-6">
+                    <!--   <input type="number" class="form-control" id="item-height"> se voglio campo H modificabile -->
+                      <input type="number" class="form-control" id="item-height" readonly>
+                    </div>
+                  </div>
+                </div>
+                <small><span class="text-muted">Misure in centimetri [cm]</span></small>
+              </div>
+            </div>
+
+            <label><input type="checkbox" id="fixed" /> Blocca posizione</label>
+ <!--  -->           <br />
+            <label><span class="text-muted" style="color:green" id="prez">Prezzo: </span><i><span id="modelPricetot"></span></i>
+	    <span class="text-muted" style="color:green" id="infoiva"> IVA inclusa</span>
+	    </label>  
+            <br /><br />
+              
+            <a class="btn btn-block btn-success" href="" id="modelBuybasketlink" target="_blank">
+                <span class="glyphicon glyphicon-align-center" id="basketorcustom"></span> 
+                Altri Dettagli o Compra
+              </a>
+	    <a class="btn btn-block btn-success" href="" id="modelBuybasketlink2" target="_blank">
+            <span class="glyphicon glyphicon-send" id="basketorcustom2"></span>
+                Richiedi Info e Costi
+              </a>
+            <a class="btn btn-block btn-success" href="" id="namecodeitem" target="_blank">
+		link
+	      </a> 
+   
+   
+<script>
+  $( function() {
+    var spinnerW = $( "#item-width" ).spinner();
+    var spinnerH = $( "#item-height" ).spinner();
+    var spinnerP = $( "#item-depth" ).spinner();
+ 
+    $( "#modelBuybasketlink2" ).on( "click", function() {    
+      var primapartediurl = document.getElementById("namecodeitem").href;
+      var secondapartediurl = "&L="+spinnerW.spinner( "value" )+"&H="+spinnerH.spinner( "value" )+"&P="+spinnerP.spinner( "value" )+"";
+      document.getElementById("modelBuybasketlink2").href = ""+primapartediurl+""+secondapartediurl+""; 
+    });
+  } );
+  </script> 
+              
+              
+             
+             
+             
+             
+              
+	     <br /><br />                                                   
+              
+            </div>
+          </div>
+		
+		
+
+<div class="col-xs-9 main">
+
+<a href="#" class="btn btn-default btn-sm" id="save_image_locally">
+<span class="glyphicon glyphicon-screenshot" title="Salva immagine del progetto"></span>                  <!--  ImgJpg -->
+</a>  
+<script>
+  $('#save_image_locally').click(function(){
+    html2canvas($('#imagesave'), 
+    {
+      onrendered: function (canvas) {  
+       var a = document.createElement('a');
+        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+        a.download = 'myfilename.jpg';
+        a.click();  
+   
+      }
+    });
+  });
+</script>
+              
+<!-- insert label storiablue with its own link                  
+<a href="storiablueblue" style="font-size: 20px; font-style: italic; color: red;">storiablue</a>
+--> 
+              
+&nbsp;<span class="mcright"><a href="storiablueblue" class="fontkaushan">storiabluee12345</a>
+</span>
+                    
+
+              
+<!-- end inserting label storiablue with its own link  -->
+               
+            </div>
+		
+		
+
 <script>
 ;(function(){
 	//////////////////////////////////////////////////////////////////////////////////
@@ -478,4 +648,10 @@
 		})
 	})
 })()
-</script></body>
+</script>
+	
+	
+		</div>	
+	
+	
+	</body>
