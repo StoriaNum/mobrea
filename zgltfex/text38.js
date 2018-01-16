@@ -1,3 +1,4 @@
+<script>
 module.exports = require('https://raw.githubusercontent.com/AnalyticalGraphicsInc/obj2gltf/master/index.js');
     
    var obj2gltf = require('obj2gltf');
@@ -8,4 +9,4 @@ obj2gltf('model.obj')
         fs.writeFileSync('model.gltf', data);
     }); 
     
- 
+ </script>
