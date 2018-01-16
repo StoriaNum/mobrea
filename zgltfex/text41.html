@@ -16,7 +16,7 @@
 <script>
 var obj2gltf = require('obj2gltf');
 var fs = require('fs');
-obj2gltf('https://raw.githubusercontent.com/StoriaNum/obj2gltf/master/model.obj')
+obj2gltf('https://raw.githubusercontent.com/StoriaNum/obj2gltf/master/provaobj.obj')
     .then(function(gltf) {
         var data = Buffer.from(JSON.stringify(gltf));
         fs.writeFileSync('model.gltf', data);
