@@ -1,14 +1,4 @@
-<!doctype html>
-<html>
-<head>
-
-  <script src="https://raw.githubusercontent.com/AnalyticalGraphicsInc/obj2gltf/master/index.js"></script>
-
-
-</head>
-<body>
-
-  <script>
+module.exports = require('https://raw.githubusercontent.com/AnalyticalGraphicsInc/obj2gltf/master/index.js');
     
    var obj2gltf = require('obj2gltf');
 var fs = require('fs');
@@ -18,8 +8,4 @@ obj2gltf('model.obj')
         fs.writeFileSync('model.gltf', data);
     }); 
     
-  </script>
-  
-  
-</body>
-</html>
+ 
